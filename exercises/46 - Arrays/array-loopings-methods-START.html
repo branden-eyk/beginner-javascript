@@ -12,7 +12,19 @@
 
 <body>
   <script>
-    const toppings = ['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions', 'Cheese'];
+    const toppings = [
+      'Mushrooms ',
+      'Tomatoes',
+      'Eggs',
+      'Chili',
+      'Lettuce',
+      'Avocado',
+      'Chiles',
+      'Bacon',
+      'Pickles',
+      'Onions',
+      'Cheese',
+    ];
 
     const students = [
       {
@@ -67,32 +79,31 @@
         birthday: 'April 22, 1993',
         names: {
           first: 'Keith',
-          last: 'Buckley'
-        }
+          last: 'Buckley',
+        },
       },
       {
         birthday: 'January 3, 1975',
         names: {
           first: 'Larry',
-          last: 'Heep'
-        }
+          last: 'Heep',
+        },
       },
       {
         birthday: 'February 12, 1944',
         names: {
           first: 'Linda',
-          last: 'Bermeer'
-        }
-      }
+          last: 'Bermeer',
+        },
+      },
     ];
-
 
     const buns = ['egg', 'wonder', 'brioche'];
 
     const meats = {
       beyond: 10,
       beef: 5,
-      pork: 7
+      pork: 7,
     };
 
     const prices = {
@@ -124,11 +135,126 @@
       { type: 'pants', price: 123 },
     ];
 
-
     /*
       Looping Methods
     */
 
+    function logTopping(topping, index, array) {
+      const nextTopping = array[index + 1];
+      const prevTopping = array[index - 1];
+      // log the topping
+      console.log(topping);
+      // log the previous topping if there is one
+      if (prevTopping) {
+        console.log(prevTopping);
+      }
+      // log the next topping if there is one
+      if (nextTopping) {
+        console.log(nextTopping);
+      }
+      // If it's the last item in the array, say goodbye
+      // if (!nextTopping) {
+      //   console.log('Goodbye');
+      // }
+
+      const message =
+        index === array.length - 1 ? 'Goodbye' : 'Getting the next Topping';
+      console.log(message);
+
+      // index === array.length - 1 && console.log('Goodbye');
+      console.log('--------------------------');
+    }
+    toppings.forEach(logTopping);
+
+    // Map, Filter, Reduce
+    function addArms(face) {
+      return `🖐️${face}🖐️`;
+    }
+
+    const toys = faces.map(addArms);
+    console.log(toys);
+
+    function bosify(name) {
+      return `${name} Bos`;
+    }
+
+    function capitalize(word) {
+      return `${word[0].toUpperCase()}${word.slice(1)}`;
+    }
+
+    const fullNames = ['wes', 'kait', 'poppy'].map(capitalize).map(bosify);
+    console.log(fullNames);
+
+    const orderTotalsWithTax = orderTotals.map((total) => total * 1.13);
+    console.log(orderTotalsWithTax);
+
+    const cleanPeople = people.map((person) => {
+      console.log(person);
+      // get their birthday
+      const birthday = new Date(person.birthday).getTime();
+      // figure out how old they are
+      const now = Date.now();
+      const age = Math.floor((now - birthday) / 31536000000);
+      console.log(age);
+      // return their full name and b-day in an object
+      return {
+        age,
+        name: `${person.names.first} ${person.names.last}`,
+      };
+    });
+    console.table(cleanPeople);
+
+    // Find and Filter
+    const over40 = cleanPeople.filter((person) => person.age > 40);
+    console.log(over40);
+
+    if (over40.length) {
+      console.log('There are some people over 40');
+    }
+
+    function findById(id) {
+      return function isStudent(student) {
+        return student.id === id;
+      };
+    }
+
+    function findByProp(prop, propWeAreLookingFor) {
+      return function isStudent(student) {
+        return student[prop] === propWeAreLookingFor;
+      };
+    }
+
+    const student = students.find(findByProp('id', '565a'));
+    const student2 = students.find(findByProp('first_name', 'Micki'));
+    console.log(student);
+    console.log(student2);
+
+    // Reduce!
+    console.clear();
+
+    function tallyNumbers(tally, currentTotal) {
+      console.log(`The current tally is ${tally}`);
+      console.log(`The current total is ${currentTotal}`);
+      console.log('---------------------');
+      // return the current tally PLUS the amount of this order
+      return tally + currentTotal;
+    }
+
+    const allOrders = orderTotals.reduce(tallyNumbers, 0);
+    console.log(allOrders);
+
+    function inventoryReducer(totals, item) {
+      console.log(`Looping over ${item.type}`);
+      // increment the type by 1
+      totals[item.type] = totals[item.type] + 1 || 1;
+      // return the totals, the next loop can use it
+      return totals;
+    }
+    const inventoryCounts = inventory.reduce(inventoryReducer, {});
+    console.log(inventoryCounts);
+
+    const totalInvetoryPrice = inventory.reduce((acc, item) => acc + item.price, 0);
+    console.log(totalInvetoryPrice);
   </script>
 </body>
 

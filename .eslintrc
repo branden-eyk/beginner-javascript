@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "wesbos"
+  ],
+  "rules": {
+    "no-plusplus": "off",
+    "no-promise-executor-return": "off",
+    "no-async-promise-executor": "off",
+  }
+}
